@@ -24,34 +24,50 @@ int main(int argv, char** argc){
     
   //Read each file
   while (getline (cardFile1, line) && (line.length() > 0)){
-      if (line.length()<5)
+      if (line.length()<5){
           //cout<<line.at(0)<<" "<<line.at(2)<<endl;
           a.append(line.at(0),line.at(2));
-      else if (line.length()>=5)
+          //cout<<"11"<<endl;
+          a.print();
+          cout<<endl;
+      }
+      else if (line.length()>=5){
           //cout<<line.at(0)<<" "<<10<<endl;
           a.append(line.at(0),10);
+          //cout<<"11"<<endl;
+          a.print();
+          cout<<endl;
+      }
   }
   cardFile1.close();
 
 
   while (getline (cardFile2, line) && (line.length() > 0)){
-      if (line.length()<5)
+      if (line.length()<5){
           //cout<<line.at(0)<<" "<<line.at(2)<<endl;
           b.append(line.at(0),line.at(2));
-      else if (line.length()>=5)
+          //cout<<"22"<<endl;
+          b.print();
+          cout<<endl;
+      }
+      else if (line.length()>=5){
           //cout<<line.at(0)<<" "<<10<<endl;
-          b.append(line.at(0),10);
+          b.append(line.at(0), 10);
+          //cout<<"22"<<endl;
+          b.print();
+          cout<<endl;
+      }
   }
   cardFile2.close();
     
-    a.print();
-    b.print();
+    //a.print();
+    //b.print();
 
     //store the number of cards each stack has
     int acount = a.count();
     int bcount = b.count();
     
-    cout<<acount<<" "<<bcount<<endl;
+    //cout<<endl<<acount<<" "<<bcount<<endl;
     
     
     //marks who takes turn
