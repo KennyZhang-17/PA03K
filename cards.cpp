@@ -232,30 +232,49 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
     
     // If the key to be deleted is smaller than the root's key,
     // then it lies in left subtree
-    if (suit < root->suit )
+    else if (suit < root->suit )
         root->left = deleteNode(root->left, suit,num);
     
     // If the key to be deleted is greater than the root's key,
     // then it lies in right subtree
-    else if (suit > root->suit || (suit== root->suit && num<root->num))
+    else if (suit > root->suit )
         root->right = deleteNode(root->right, suit,num);
     
     // if key is same as root's key, then This is the node
     // to be deleted
     else
     {
+        if(num < root->num)
+            root->left = deleteNode(root->left,color, data);
+        else if(data > root->number)
+            root->right = deleteNode(root->right,color, data);
+        else{
         // node with only one child or no child
-        if (root->left == NULL)
+      if(root->left==NULL && root->right==NULL)
+    {
+      delete root;
+      root=NULL;
+      
+
+      cout<<"no child case"<<endl;
+      return root;
+    }
+        else if (root->left == NULL)
         {
-            Card *temp = root->right;
-            delete (root);
-            return temp;
+            Card *temp = root;
+            delete (temp);
+        temp=NULL;
+        cout<<"Delete left null case"<<endl;
+        return root->right;
+        
         }
         else if (root->right == NULL)
         {
-            Card *temp = root->left;
-            delete (root);
-            return temp;
+            Card *temp = root;
+            delete (temp);
+        temp=NULL;
+        cout<<"Delete right null  case"<<endl;
+            return root->left;
         }
         
         // node with two children: Get the inorder successor (smallest
@@ -269,6 +288,7 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
         
         // Delete the inorder successor
         root->right = deleteNode(root->right, temp->suit,temp->num);
+    }
     }
     return root;
 }
@@ -320,21 +340,48 @@ bool Cards::matchFound(int suit, int k){
     return false;
 }*/
 
+/*
 bool Cards::matchFound(int s, int k){
     return (matchFound(s,k,root));
 }
 
 bool Cards::matchFound(int s, int k, Card* n){
     if (!n)
-        return true;
+        return false;
     if (n->suit ==s){
+      if(n->suit==k) return true;
         if (n->num > k)
             return (matchFound(s,k,n->left));
         if (n->num < k)
             return (matchFound(s,k,n->right));
     }
     
-    if (n->suit > s)
+    if (n->suit < s)
+        return (matchFound(s,k,n->right));
+    else
+        return (matchFound(s,k,n->left));
+}*/
+bool Cards::matchFound(int s, int k){
+    return (matchFound(s,k,root));
+}
+
+bool Cards::matchFound(int s, int k, Card* n){
+    if (!n){
+        cout<<"empty stack case"<<endl;
+        return false;
+    }
+    if (n->suit ==s){
+        if (n->num == k){
+            cout<<"card found"<<endl;
+            return true;
+        }
+        if (n->num > k)
+            return (matchFound(s,k,n->left));
+        if (n->num < k)
+            return (matchFound(s,k,n->right));
+    }
+    
+    if (n->suit < s)
         return (matchFound(s,k,n->right));
     else
         return (matchFound(s,k,n->left));
@@ -421,8 +468,14 @@ void game (Cards& a, Cards& b){
                 decode_s(a_ptr);
                 decode_n(a_ptr);
                 b.root = b.deleteNode(b.root,a_ptr->suit,a_ptr->num);
+        cout<<"remove b success"<<endl;
+                cout<<"print b"<<endl;
+                b.print();
                 a.root = a.deleteNode(a.root,a_ptr->suit,a_ptr->num);
-                a_turn = true;
+                cout<<"print a"<<endl;
+                a.print();
+        cout<<"remove a success"<<endl;
+        a_turn = true;
             }else
                 a_ptr = a.findSuc(a.root,a_ptr);
         }
@@ -433,7 +486,13 @@ void game (Cards& a, Cards& b){
                 decode_s(b_ptr);
                 decode_n(b_ptr);
                 a.root = a.deleteNode(a.root,b_ptr->suit,b_ptr->num);
+        cout<<"remove from a success"<<endl;
+                cout<<"print a"<<endl;
+                a.print();
                 b.root = b.deleteNode(b.root,b_ptr->suit,b_ptr->num);
+        cout<<"remove from b success"<<endl;
+                cout<<"print b"<<endl;
+                b.print();
                 b_turn = true;
             }else
                 b_ptr = b.findPre(b.root,b_ptr);
