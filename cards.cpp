@@ -43,7 +43,7 @@ void Cards::clear(Card* n) {
  
  */
 //print all the cards in a stack
-void Cards::decode_s(Card *n) const{
+void decode_s(Card *n){
     int i=n->suit;
         if (i==1) cout<< "c ";
         else if (i==2) cout<< "d ";
@@ -51,7 +51,7 @@ void Cards::decode_s(Card *n) const{
         else cout<< "h ";
 }
 
-void Cards::decode_n(Card *n) const{
+void decode_n(Card *n){
     int i=n->num;
     if (i==1)  cout<< "a"<<endl;
     else if (i==11) cout<< "j"<<endl;
@@ -114,7 +114,7 @@ bool Cards::append(int s, int k, Card* n){
                 n->right->suit = sig;
                 n->right->num = u;
                 n->right->left = NULL;
-                n->right->left = NULL;
+                n->right->right = NULL;
                 return true;
             }else{
                 return append(s,k,n->right);
@@ -129,8 +129,9 @@ bool Cards::append(int s, int k, Card* n){
             n->right->right = NULL;
             return true;
         }
-        else
+        else{
             return append(s,k,n->right);
+        }
     }else{
         if (!n->left){
             n->left = new Card;
@@ -144,7 +145,7 @@ bool Cards::append(int s, int k, Card* n){
     }return false;
 }
 
-
+/*
 Card* Cards::findPre(Card* root, int num, int suit){
     if (root == NULL)  return 0;
     Card* pre;
@@ -166,8 +167,41 @@ Card* Cards::findPre(Card* root, int num, int suit){
         pre = root ;
         findPre(root->right, num, suit ) ;
     }
-    
+}*/
+
+
+Card* Cards::findPre(Card* root, Card* x){
+    Card * pre = NULL;
+    if (x->left != NULL)
+        return maxValueNode (x->left);
+    while (root != NULL){
+        if((x->suit > root->suit) || ((x->suit==root->suit) && (x->num>root->num))){
+            pre = root;
+            root = root->right;
+        }else if ((x->suit < root->suit) || (x->suit==root->suit&& x->num<root->num))
+            root = root->left;
+        else break;
+    }
+    return pre;
 }
+
+Card* Cards::findSuc(Card* root, Card* x){
+    Card * suc = NULL;
+    if (x->right != NULL)
+        return minValueNode (x->right);
+    while (root != NULL){
+        if ((x->suit < root->suit) || (x->suit==root->suit && x->num<root->num)){
+            suc = root;
+            root = root ->left;
+        }else if((x->suit > root->suit) || ((x->suit==root->suit) && (x->num>root->num)))
+            root = root->right;
+        else break;
+    }
+    return suc;
+}
+
+
+/*
 Card* Cards::findSuc(Card* root, int num, int suit){
     if (root == NULL)  return 0;
     Card* suc;
@@ -190,7 +224,7 @@ Card* Cards::findSuc(Card* root, int num, int suit){
         findSuc(root->left, num, suit ) ;
     }
     
-}
+}*/
 Card* Cards::deleteNode(Card* root, int suit, int num)
 {
     // base case
@@ -214,13 +248,13 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
         if (root->left == NULL)
         {
             Card *temp = root->right;
-            clear(root);
+            delete (root);
             return temp;
         }
         else if (root->right == NULL)
         {
             Card *temp = root->left;
-            clear(root);
+            delete (root);
             return temp;
         }
         
@@ -239,7 +273,7 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
     return root;
 }
 
-Card* Cards::minValueNode(Card* s)
+Card* minValueNode(Card* s)
 {
     Card* current = s;
     
@@ -250,19 +284,29 @@ Card* Cards::minValueNode(Card* s)
     return current;
 }
 
+Card* maxValueNode(Card* s)
+{
+    Card* current = s;
+    while (current->right != NULL)
+        current = current->right;
+    return current;
+}
+
+
 //remove a card from a stack
 void Cards::remove(int suit, int k){
-    
     root=deleteNode(root,suit,k);
 }
 
 //returns true if match is found
+/*
 bool Cards::matchFound(int suit, int k){
+    Card* pre = root;
     Card *n = root;
     int j=root->suit;
     int m=root->num;
-    while (n){
-        n=findPre(n,m,j);
+    while (pre){
+        pre=findPre(n,pre,m,j);
         k=n->num;
         j=n->suit;
     }
@@ -274,7 +318,29 @@ bool Cards::matchFound(int suit, int k){
         j=n->suit;
     }
     return false;
+}*/
+
+bool Cards::matchFound(int s, int k){
+    return (matchFound(s,k,root));
 }
+
+bool Cards::matchFound(int s, int k, Card* n){
+    if (!n)
+        return true;
+    if (n->suit ==s){
+        if (n->num > k)
+            return (matchFound(s,k,n->left));
+        if (n->num < k)
+            return (matchFound(s,k,n->right));
+    }
+    
+    if (n->suit > s)
+        return (matchFound(s,k,n->right));
+    else
+        return (matchFound(s,k,n->left));
+}
+
+
 //count the number of cards in the class
 
 int Cards::count() const{
@@ -291,7 +357,7 @@ int Cards::count(Card*n) const{
 }
 
 //Play the game and return the string of output
-string Cards::process_A(Cards & target){
+/*string Cards::process_A(Cards & target){
     string result = "";
     Card * n = root;
     int j=root->suit;
@@ -340,7 +406,41 @@ string Cards::process_B(Cards & target){
         j=n->suit;
     }
     return result;
+}*/
+
+void game (Cards& a, Cards& b){
+    Card* a_ptr = minValueNode(a.root);
+    Card* b_ptr = maxValueNode(b.root);
+    while (a_ptr&&b_ptr){
+        a_ptr = minValueNode(a.root);
+        b_ptr = maxValueNode(b.root);
+        bool a_turn(0), b_turn(0);
+        while (a_ptr != NULL && a_turn == 0){
+            if (b.matchFound(a_ptr->suit, a_ptr->num) == true){
+                cout<<"Alice picked matching card ";
+                decode_s(a_ptr);
+                decode_n(a_ptr);
+                b.root = b.deleteNode(b.root,a_ptr->suit,a_ptr->num);
+                a.root = a.deleteNode(a.root,a_ptr->suit,a_ptr->num);
+                a_turn = true;
+            }else
+                a_ptr = a.findSuc(a.root,a_ptr);
+        }
+        a_ptr = minValueNode(a.root);
+        while (b_ptr!=NULL && b_turn == 0){
+            if (a.matchFound(b_ptr->suit,b_ptr->num) == true){
+                cout<<"Bob picked matching card ";
+                decode_s(b_ptr);
+                decode_n(b_ptr);
+                a.root = a.deleteNode(a.root,b_ptr->suit,b_ptr->num);
+                b.root = b.deleteNode(b.root,b_ptr->suit,b_ptr->num);
+                b_turn = true;
+            }else
+                b_ptr = b.findPre(b.root,b_ptr);
+        }
+    } cout<<endl;
 }
+
 
 
 void Cards::print() const{
@@ -350,14 +450,8 @@ void Cards::print() const{
 void Cards::print(Card* n) const{
     if(n){
         print(n->left);
-        //decode_s(n);
+        decode_s(n);
         decode_n(n);
         print(n->right);
     }
 }
-
-
-
-
-
-

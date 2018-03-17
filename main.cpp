@@ -5,6 +5,8 @@
 
 using namespace std;
 
+//void game(Cards a, Cards b);
+
 int main(int argv, char** argc){
   if(argv < 3){
     cout << "Please provide 2 file names" << endl;
@@ -28,47 +30,55 @@ int main(int argv, char** argc){
           //cout<<line.at(0)<<" "<<line.at(2)<<endl;
           a.append(line.at(0),line.at(2));
           //cout<<"11"<<endl;
-          a.print();
-          cout<<endl;
+          //a.print();
+//          cout<<endl;
       }
       else if (line.length()>=5){
           //cout<<line.at(0)<<" "<<10<<endl;
           a.append(line.at(0),10);
           //cout<<"11"<<endl;
-          a.print();
-          cout<<endl;
+          //a.print();
+          //cout<<endl;
       }
   }
   cardFile1.close();
 
+    cout<<"CHECK POINT"<<endl;
 
+    
   while (getline (cardFile2, line) && (line.length() > 0)){
       if (line.length()<5){
-          //cout<<line.at(0)<<" "<<line.at(2)<<endl;
+//          cout<<line.at(0)<<" "<<line.at(2)<<endl;
           b.append(line.at(0),line.at(2));
-          //cout<<"22"<<endl;
-          b.print();
-          cout<<endl;
+//          cout<<"22"<<endl;
+          //b.print();
+          //cout<<endl;
       }
       else if (line.length()>=5){
-          //cout<<line.at(0)<<" "<<10<<endl;
+//          cout<<line.at(0)<<" "<<10<<endl;
           b.append(line.at(0), 10);
-          //cout<<"22"<<endl;
-          b.print();
-          cout<<endl;
+//          cout<<"22"<<endl;
+//          b.print();
+          //cout<<endl;
       }
   }
   cardFile2.close();
     
-    //a.print();
-    //b.print();
-
-    //store the number of cards each stack has
+    cout<<"GAME START CHECK POINT"<<endl;
+    
+    game(a,b);
+    
+//    a.print();
+//    b.print();
+    //store the number of cards each stack has]
+    
+/*
     int acount = a.count();
     int bcount = b.count();
     
-    //cout<<endl<<acount<<" "<<bcount<<endl;
+//    cout<<endl<<acount<<" "<<bcount<<endl;
     
+//    cout<<"checkpoint"<<endl;
     
     //marks who takes turn
     int turn = 1;
@@ -98,9 +108,9 @@ int main(int argv, char** argc){
     }
     
     cout<<endl<<"Alice's cards:"<<endl;
-    a.print();
+//    a.print();
     cout<<endl<<"Bob's cards:"<<endl;
-    b.print();
-
+//    b.print();
+*/
   return 0;
 }

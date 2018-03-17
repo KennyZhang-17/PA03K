@@ -48,18 +48,29 @@ public:
     void clear(Card* n); //destructor deletes all nodes
     int count(Card* n) const;
     int count() const; //returns the number of cards in a stack
-    bool matchFound(int suit, int k); //returns T if match found
-    std::string process_A(Cards & target);//process the stack
-    std::string process_B(Cards & target);
-    Card* findSuc(Card* root, int num, int suit);
-    Card* findPre(Card* root, int num, int suit);
-    Card* minValueNode(Card* s);
+    bool matchFound(int s, int k); //returns T if match found
+    bool matchFound(int s, int k, Card* n);
+    //std::string process_A(Cards & target);//process the stack
+    //std::string process_B(Cards & target);
+    //Card* findSuc(Card* root, int num, int suit);
+    //Card* findPre(Card* root, int num, int suit);
+    Card* findPre(Card* root, Card* x);
+    Card* findSuc(Card* root, Card* x);
+//    Card* minValueNode(Card* s);
+//    Card* maxValueNode(Card* s);
     Card* deleteNode(Card* root, int suit, int num);
-    void decode_n(Card* n) const;
-    void decode_s(Card* n) const;
+//    void decode_n(Card* n) const;
+//    void decode_s(Card* n) const;
+    Card *root;
+    
 private:
     
-    Card *root; //pointer to the first card
+//    Card *root; //pointer to the first card
 };
+    void game (Cards& a, Cards& b);
+    Card* minValueNode(Card* s);
+    Card* maxValueNode(Card* s);
+    void decode_n(Card* n) ;
+    void decode_s(Card* n) ;
 #endif
 
