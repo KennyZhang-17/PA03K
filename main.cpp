@@ -26,14 +26,20 @@ int main(int argv, char** argc){
     
   //Read each file
   while (getline (cardFile1, line) && (line.length() > 0)){
-      if (line.length()<5){
-          //cout<<line.at(0)<<" "<<line.at(2)<<endl;
-          a.append(line.at(0),line.at(2));
+      
+     // cout<<"CHECK "<<line.at(2)<<" Length = "<<line.length()<< "TF "<<cardFile1.eof()<<endl;
+      if (line.at(2)-'0' == 1 && line.length()>3&& cardFile1.eof()){
+         // cout<<"***"<<endl;
+          a.append(line.at(0),10);
+      }
+      
+      else if (line.length()<5){
+              a.append(line.at(0),line.at(2));
           //cout<<"11"<<endl;
           //a.print();
 //          cout<<endl;
       }
-      else if (line.length()>=5){
+      else {
           //cout<<line.at(0)<<" "<<10<<endl;
           a.append(line.at(0),10);
           //cout<<"11"<<endl;
@@ -43,18 +49,26 @@ int main(int argv, char** argc){
   }
   cardFile1.close();
 
-    cout<<"CHECK POINT"<<endl;
+    //cout<<"CHECK POINT"<<endl;
 
     
   while (getline (cardFile2, line) && (line.length() > 0)){
-      if (line.length()<5){
+      //cout<<"CHECK "<<line.at(2)<<" Length = "<<line.length()<< "TF "<<cardFile2.eof()<<endl;
+      
+      if (line.at(2)-'0' == 1 && line.length()>3 &&  cardFile2.eof()){
+          //cout<<"***"<<endl;
+          b.append(line.at(0),10);
+      }
+      
+      else if (line.length()<5){
 //          cout<<line.at(0)<<" "<<line.at(2)<<endl;
-          b.append(line.at(0),line.at(2));
+          
+              b.append(line.at(0),line.at(2));
 //          cout<<"22"<<endl;
           //b.print();
           //cout<<endl;
       }
-      else if (line.length()>=5){
+      else {
 //          cout<<line.at(0)<<" "<<10<<endl;
           b.append(line.at(0), 10);
 //          cout<<"22"<<endl;
@@ -64,8 +78,12 @@ int main(int argv, char** argc){
   }
   cardFile2.close();
     
-    cout<<"GAME START CHECK POINT"<<endl;
-    
+//    cout<<"Alice's cards:"<<endl;
+//    a.print();
+//    cout<<endl<<"Bob's cards:"<<endl;
+//    b.print();
+//    //cout<<"GAME START CHECK POINT"<<endl;
+//    cout<<endl;
     game(a,b);
     
 //    a.print();
@@ -106,11 +124,8 @@ int main(int argv, char** argc){
             bcount = b.count();
         }
     }
-    
-    cout<<endl<<"Alice's cards:"<<endl;
-//    a.print();
-    cout<<endl<<"Bob's cards:"<<endl;
-//    b.print();
-*/
+ */
+
+
   return 0;
 }
