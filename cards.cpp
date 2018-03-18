@@ -245,9 +245,9 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
     else
     {
         if(num < root->num)
-            root->left = deleteNode(root->left,color, data);
-        else if(data > root->number)
-            root->right = deleteNode(root->right,color, data);
+            root->left = deleteNode(root->left,suit, num);
+        else if( num > root->num)
+            root->right = deleteNode(root->right,suit, num);
         else{
         // node with only one child or no child
       if(root->left==NULL && root->right==NULL)
@@ -256,7 +256,7 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
       root=NULL;
       
 
-      cout<<"no child case"<<endl;
+      //cout<<"no child case"<<endl;
       return root;
     }
         else if (root->left == NULL)
@@ -264,7 +264,7 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
             Card *temp = root;
             delete (temp);
         temp=NULL;
-        cout<<"Delete left null case"<<endl;
+      //  cout<<"Delete left null case"<<endl;
         return root->right;
         
         }
@@ -273,7 +273,7 @@ Card* Cards::deleteNode(Card* root, int suit, int num)
             Card *temp = root;
             delete (temp);
         temp=NULL;
-        cout<<"Delete right null  case"<<endl;
+       // cout<<"Delete right null  case"<<endl;
             return root->left;
         }
         
@@ -367,12 +367,12 @@ bool Cards::matchFound(int s, int k){
 
 bool Cards::matchFound(int s, int k, Card* n){
     if (!n){
-        cout<<"empty stack case"<<endl;
+     //   cout<<"empty stack case"<<endl;
         return false;
     }
     if (n->suit ==s){
         if (n->num == k){
-            cout<<"card found"<<endl;
+          //  cout<<"card found"<<endl;
             return true;
         }
         if (n->num > k)
@@ -468,13 +468,13 @@ void game (Cards& a, Cards& b){
                 decode_s(a_ptr);
                 decode_n(a_ptr);
                 b.root = b.deleteNode(b.root,a_ptr->suit,a_ptr->num);
-        cout<<"remove b success"<<endl;
-                cout<<"print b"<<endl;
-                b.print();
+        //cout<<"remove b success"<<endl;
+             //   cout<<"print b"<<endl;
+//b.print();
                 a.root = a.deleteNode(a.root,a_ptr->suit,a_ptr->num);
-                cout<<"print a"<<endl;
-                a.print();
-        cout<<"remove a success"<<endl;
+              //  cout<<"print a"<<endl;
+              //  a.print();
+        //cout<<"remove a success"<<endl;
         a_turn = true;
             }else
                 a_ptr = a.findSuc(a.root,a_ptr);
@@ -486,18 +486,22 @@ void game (Cards& a, Cards& b){
                 decode_s(b_ptr);
                 decode_n(b_ptr);
                 a.root = a.deleteNode(a.root,b_ptr->suit,b_ptr->num);
-        cout<<"remove from a success"<<endl;
-                cout<<"print a"<<endl;
-                a.print();
+        //cout<<"remove from a success"<<endl;
+              //  cout<<"print a"<<endl;
+              //  a.print();
                 b.root = b.deleteNode(b.root,b_ptr->suit,b_ptr->num);
-        cout<<"remove from b success"<<endl;
-                cout<<"print b"<<endl;
-                b.print();
+        //cout<<"remove from b success"<<endl;
+              //  cout<<"print b"<<endl;
+              //  b.print();
                 b_turn = true;
             }else
                 b_ptr = b.findPre(b.root,b_ptr);
         }
     } cout<<endl;
+    cout<<"Alice's cards:"<<endl;
+    a.print();
+    cout<<"Bob's cards:"<<endl;
+    a.print();
 }
 
 
