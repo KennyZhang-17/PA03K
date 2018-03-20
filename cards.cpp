@@ -32,8 +32,7 @@ void Cards::clear(Card* n) {
  
  delete root;
  }
- 
- Cards::Card::~Card(){
+  Cards::Card::~Card(){
  if(left!=0)
  {delete (left);}
  if(right!=0)
@@ -41,7 +40,7 @@ void Cards::clear(Card* n) {
  
  }
  
- */
+*/
 //print all the cards in a stack
 void decode_s(Card *n){
     int i=n->suit;
@@ -75,7 +74,7 @@ bool Cards::append(char s, char k){
     else if ( k=='j') u=11;
     else if (k=='q') u=12;
     else if (k== 'k') u=13;
-    else if (k==10) u=10;
+    else if (k=='l') u=10;
     else u = k-'0';
     
     if (!root){
@@ -500,8 +499,9 @@ void game (Cards& a, Cards& b){
     } cout<<endl;
     cout<<"Alice's cards:"<<endl;
     a.print();
+    cout<<endl;
     cout<<"Bob's cards:"<<endl;
-    a.print();
+    b.print();
 }
 
 

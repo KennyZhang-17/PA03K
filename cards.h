@@ -12,7 +12,10 @@ struct Card{
     Card *right;
     // useful constructor:
     //Card(int m=0, int v=0) : num(v), suit(m), left(0), right(0) { }
-    //~Card();//destructor for the Card
+    ~Card(){
+    	if(left==NULL) delete left;
+    	if(right==NULL) delete right;
+    }//destructor for the Card
     
     bool operator==(const Card& other)//overload operator==
     {
@@ -73,4 +76,3 @@ private:
     void decode_n(Card* n) ;
     void decode_s(Card* n) ;
 #endif
-

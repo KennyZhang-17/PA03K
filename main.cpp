@@ -28,24 +28,24 @@ int main(int argv, char** argc){
   while (getline (cardFile1, line) && (line.length() > 0)){
       
      // cout<<"CHECK "<<line.at(2)<<" Length = "<<line.length()<< "TF "<<cardFile1.eof()<<endl;
-      if (line.at(2)-'0' == 1 && line.length()>3&& cardFile1.eof()){
+      if (line.at(2)=='1'){
          // cout<<"***"<<endl;
-          a.append(line.at(0),10);
+          a.append(line.at(0),'l');
       }
       
-      else if (line.length()<5){
+      else {
               a.append(line.at(0),line.at(2));
           //cout<<"11"<<endl;
           //a.print();
 //          cout<<endl;
       }
-      else {
+   //   else {
           //cout<<line.at(0)<<" "<<10<<endl;
-          a.append(line.at(0),10);
+     //     a.append(line.at(0),10);
           //cout<<"11"<<endl;
           //a.print();
           //cout<<endl;
-      }
+    //  }
   }
   cardFile1.close();
 
@@ -55,12 +55,12 @@ int main(int argv, char** argc){
   while (getline (cardFile2, line) && (line.length() > 0)){
       //cout<<"CHECK "<<line.at(2)<<" Length = "<<line.length()<< "TF "<<cardFile2.eof()<<endl;
       
-      if (line.at(2)-'0' == 1 && line.length()>3 &&  cardFile2.eof()){
+      if (line.at(2)=='1' ){
           //cout<<"***"<<endl;
-          b.append(line.at(0),10);
+          b.append(line.at(0),'l');
       }
       
-      else if (line.length()<5){
+      else {
 //          cout<<line.at(0)<<" "<<line.at(2)<<endl;
           
               b.append(line.at(0),line.at(2));
@@ -68,13 +68,13 @@ int main(int argv, char** argc){
           //b.print();
           //cout<<endl;
       }
-      else {
+      //else {
 //          cout<<line.at(0)<<" "<<10<<endl;
-          b.append(line.at(0), 10);
+   //       b.append(line.at(0), 10);
 //          cout<<"22"<<endl;
 //          b.print();
           //cout<<endl;
-      }
+    //  }
   }
   cardFile2.close();
     
